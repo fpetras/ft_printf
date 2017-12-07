@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 18:18:34 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/06 18:19:48 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/07 11:14:06 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		ft_length(const char *format, t_struct *f)
 		}
 		else if (format[f->i] == 'l')
 		{
-			if (format[f->i] == 'l')
+			if (format[f->i + 1] == 'l')
 				f->length = LL;
 			else
 				f->length = L;
@@ -49,6 +49,8 @@ void		ft_precision(const char *format, t_struct *f)
 		while (ft_isdigit(format[f->i]))
 			f->i++;
 	}
+	if (f->precision_specified)
+		f->space = 0;
 }
 
 void		ft_width(const char *format, t_struct *f)
@@ -77,6 +79,8 @@ void		ft_flags(const char *format, t_struct *f)
 			f->hash = 1;
 		f->i++;
 	}
+	if (f->plus)
+		f->space = 0;
 }
 
 void		ft_process_modifiers(const char *format, t_struct *f)
