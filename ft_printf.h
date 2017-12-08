@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 07:42:38 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/07 08:49:09 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/08 12:58:46 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,18 @@ void			ft_flags(const char *format, t_struct *f);
 void			ft_width(const char *format, t_struct *f);
 void			ft_precision(const char *format, t_struct *f);
 void			ft_length(const char *format, t_struct *f);
+void			ft_print_decimal(char type, t_struct *f, va_list ap);
+void			ft_print_unsigned_decimal(char type, t_struct *f, va_list ap);
+void			ft_print_octal(char type, t_struct *f, va_list ap);
+void			ft_print_hex(char type, t_struct *f, va_list ap);
+void			ft_print_binary(char type, t_struct *f, va_list ap);
 
 int				ft_putchar_pf(char c);
 int				ft_putstr_pf(const char *s);
 int				ft_strchr_pf(const char *s, int c);
 int				ft_itoa_base_pf(intmax_t value, int base);
-int				ft_nbr_len(intmax_t value, int base);
+int				ft_uitoa_base_pf(uintmax_t value, int base, char letter);
+int				ft_signed_nbr_len(intmax_t value, int base);
+int				ft_unsigned_nbr_len(uintmax_t value, int base);
 
 #endif

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbr_len.c                                       :+:      :+:    :+:   */
+/*   ft_signed_nbr_len.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 09:38:26 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/07 15:24:07 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/08 08:36:30 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 
-int		ft_nbr_len(int value, int base)
+int		ft_signed_nbr_len(intmax_t value, int base)
 {
 	int		i;
 

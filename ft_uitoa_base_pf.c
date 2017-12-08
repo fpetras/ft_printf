@@ -6,16 +6,16 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 07:29:30 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/07 15:44:23 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/08 11:13:46 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 
-int			ft_itoa_base_pf(intmax_t value, int base)
+int			ft_uitoa_base_pf(uintmax_t value, int base, char letter)
 {
 	int			len;
-	intmax_t	value2;
+	uintmax_t	value2;
 	char		*radix;
 	char		*result;
 
@@ -23,7 +23,10 @@ int			ft_itoa_base_pf(intmax_t value, int base)
 	value2 = value;
 	while (value2 /= base)
 		len++;
-	radix = ft_strdup("0123456789ABCDEF");
+	if (letter == 'X')
+		radix = ft_strdup("0123456789ABCDEF");
+	else
+		radix = ft_strdup("0123456789abcdef");
 	if ((result = (char*)malloc(sizeof(char) * (len + 1))) == NULL)
 		return (0);
 	result[len] = '\0';
