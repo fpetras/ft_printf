@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 08:06:19 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/08 13:05:58 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/09 11:57:59 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	ft_print_binary_left_align(intmax_t nbr, t_struct *f)
 		nbrlen += 2;
 	if (f->hash && nbr != 0)
 		f->len += write(1, "0b", 2);
-	while (++nbrlen <= f->precision)
+	while (nbrlen++ < f->precision)
 		f->len += write(1, "0", 1);
 	f->len += ft_uitoa_base_pf(nbr, 2, 0);
 	while (f->width >= nbrlen)
@@ -43,7 +43,6 @@ static void	ft_print_binary_left_align(intmax_t nbr, t_struct *f)
 static void	ft_padding(int nbrlen, t_struct *f)
 {
 	if (!f->precision_specified)
-	{
 		while (f->width > nbrlen)
 		{
 			if (f->zero)
@@ -52,18 +51,16 @@ static void	ft_padding(int nbrlen, t_struct *f)
 				f->len += write(1, " ", 1);
 			f->width--;
 		}
-	}
 	else
 	{
 		if (f->plus || f->zero)
 			f->width--;
-		while (f->width > nbrlen)
+		while (f->width-- > nbrlen)
 		{
 			if (f->zero)
 				f->len += write(1, "0", 1);
 			else
 				f->len += write(1, " ", 1);
-			f->width--;
 		}
 	}
 }
@@ -87,19 +84,11 @@ static void	ft_print_binary_right_align(uintmax_t nbr, t_struct *f)
 	if (f->hash && f->zero)
 		f->len += write(1, "0b", 2);
 	ft_padding(nbrlen, f);
-	while (++nbrlen <= f->precision)
+	while (nbrlen++ < f->precision)
 		f->len += write(1, "0", 1);
 	if (f->hash && !f->zero)
 		f->len += write(1, "0b", 2);
 	f->len += ft_uitoa_base_pf(nbr, 2, 0);
-}
-
-static void	ft_print_binary2(uintmax_t nbr, t_struct *f)
-{
-	if (f->minus)
-		ft_print_binary_left_align(nbr, f);
-	else
-		ft_print_binary_right_align(nbr, f);
 }
 
 void		ft_print_binary(char type, t_struct *f, va_list ap)
@@ -109,7 +98,7 @@ void		ft_print_binary(char type, t_struct *f, va_list ap)
 	if (type == 'b')
 	{
 		if (!f->length)
-			nbr =  va_arg(ap, unsigned int);
+			nbr = va_arg(ap, unsigned int);
 		else if (f->length == HH)
 			nbr = (unsigned char)va_arg(ap, unsigned int);
 		else if (f->length == H)
@@ -122,6 +111,9 @@ void		ft_print_binary(char type, t_struct *f, va_list ap)
 			nbr = va_arg(ap, uintmax_t);
 		else if (f->length == Z)
 			nbr = va_arg(ap, size_t);
+		if (f->minus)
+			ft_print_binary_left_align(nbr, f);
+		else
+			ft_print_binary_right_align(nbr, f);
 	}
-	ft_print_binary2(nbr, f);
 }

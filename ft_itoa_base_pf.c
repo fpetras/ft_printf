@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 07:29:30 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/07 15:44:23 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/09 11:00:52 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int			ft_itoa_base_pf(intmax_t value, int base)
 	while (value2 /= base)
 		len++;
 	radix = ft_strdup("0123456789ABCDEF");
-	if ((result = (char*)malloc(sizeof(char) * (len + 1))) == NULL)
-		return (0);
+	result = (char*)malloc(sizeof(char) * (len + 1));
 	result[len] = '\0';
 	while (len-- > 0)
 	{
@@ -33,7 +32,7 @@ int			ft_itoa_base_pf(intmax_t value, int base)
 		value /= base;
 	}
 	len = ft_strlen(result);
-	ft_putstr(result);
+	write(1, result, len);
 	free(radix);
 	free(result);
 	return (len);
