@@ -6,7 +6,7 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/03 07:33:44 by fpetras           #+#    #+#              #
-#    Updated: 2017/12/09 10:09:45 by fpetras          ###   ########.fr        #
+#    Updated: 2017/12/10 14:48:14 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,13 @@ FT_PRINTF_SRC = ft_printf.c \
 	  			ft_itoa_base_pf.c \
 	  			ft_uitoa_base_pf.c \
 	  			ft_signed_nbr_len.c \
-	  			ft_unsigned_nbr_len.c
+				ft_unsigned_nbr_len.c \
+				ft_putwchar_pf.c \
+				ft_putwstr_pf.c
 
 LIBFT_SRC =		libft/ft_atoi.c \
 	  			libft/ft_isdigit.c \
 	  			libft/ft_memalloc.c \
-	  			libft/ft_putstr.c \
 	  			libft/ft_strchr.c \
 				libft/ft_strcmp.c \
 	  			libft/ft_strdup.c \
@@ -40,7 +41,6 @@ LIBFT_SRC =		libft/ft_atoi.c \
 	  			\
 	  			libft/ft_bzero.c \
 	  			libft/ft_isspace.c \
-	  			libft/ft_putchar.c \
 	  			libft/ft_strcpy.c
 
 FT_PRINTF_OBJ = $(FT_PRINTF_SRC:.c=.o)
@@ -48,7 +48,6 @@ FT_PRINTF_OBJ = $(FT_PRINTF_SRC:.c=.o)
 LIBFT_OBJ = 	ft_atoi.o \
 				ft_isdigit.o \
 				ft_memalloc.o \
-				ft_putstr.o \
 				ft_strchr.o \
 				ft_strcmp.o \
 				ft_strdup.o \
@@ -56,7 +55,6 @@ LIBFT_OBJ = 	ft_atoi.o \
 				\
 				ft_bzero.o \
 				ft_isspace.o \
-				ft_putchar.o \
 				ft_strcpy.o
 
 CC = gcc

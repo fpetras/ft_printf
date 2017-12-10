@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 08:47:47 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/09 11:24:47 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/10 14:54:45 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 static void	ft_print_string_left_align(char *str, t_struct *f)
 {
 	int strlen;
+	int	edge_case;
 
 	if (!str)
+	{
 		str = ft_strdup("(null)");
+		edge_case = 1;
+	}
 	strlen = ft_strlen(str);
-	if (f->precision_specified && strlen > 0)
+	if (f->precision_specified && strlen > 0 && strlen > f->precision)
 		strlen = f->precision;
 	f->len += write(1, str, strlen);
 	while (f->width > strlen)
@@ -27,26 +31,33 @@ static void	ft_print_string_left_align(char *str, t_struct *f)
 		f->len += write(1, " ", 1);
 		f->width--;
 	}
-	if (ft_strcmp(str, "(null)") == 0)
+	if (ft_strcmp(str, "(null)") == 0 && edge_case == 1)
 		free(str);
 }
 
 static void	ft_print_string_right_align(char *str, t_struct *f)
 {
 	int strlen;
+	int	edge_case;
 
 	if (!str)
+	{
 		str = ft_strdup("(null)");
+		edge_case = 1;
+	}
 	strlen = ft_strlen(str);
-	if (f->precision_specified && strlen > 0)
+	if (f->precision_specified && strlen > 0 && strlen > f->precision)
 		strlen = f->precision;
 	while (f->width > strlen)
 	{
-		f->len += write(1, " ", 1);
+		if (f->zero)
+			f->len += write(1, "0", 1);
+		else
+			f->len += write(1, " ", 1);
 		f->width--;
 	}
 	f->len += write(1, str, strlen);
-	if (ft_strcmp(str, "(null)") == 0)
+	if (ft_strcmp(str, "(null)") == 0 && edge_case == 1)
 		free(str);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 08:06:19 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/09 11:57:49 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/09 16:15:32 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ static void	ft_print_unsigned_decimal_left_align(intmax_t nbr, t_struct *f)
 	int nbrlen;
 
 	nbrlen = ft_unsigned_nbr_len(nbr, 10);
+	if (nbr == 0 && f->precision_specified && !f->precision)
+	{
+		while (f->width)
+		{
+			f->len += write(1, " ", 1);
+			f->width--;
+		}
+		return ;
+	}
 	while (nbrlen++ < f->precision)
 		f->len += write(1, "0", 1);
 	f->len += ft_uitoa_base_pf(nbr, 10, 0);
@@ -57,6 +66,15 @@ static void	ft_print_unsigned_decimal_right_align(uintmax_t nbr, t_struct *f)
 	int nbrlen;
 
 	nbrlen = ft_unsigned_nbr_len(nbr, 10);
+	if (nbr == 0 && f->precision_specified && !f->precision)
+	{
+		while (f->width)
+		{
+			f->len += write(1, " ", 1);
+			f->width--;
+		}
+		return ;
+	}
 	ft_padding(nbrlen, f);
 	while (nbrlen++ < f->precision)
 		f->len += write(1, "0", 1);

@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 09:38:26 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/08 08:36:30 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/09 17:31:05 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int		ft_signed_nbr_len(intmax_t value, int base)
 	i = 0;
 	if (value == 0)
 		return (1);
+	if (value < -9223372036854775807)
+		return (20);
 	if (value < 0)
 	{
 		i++;

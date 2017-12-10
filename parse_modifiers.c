@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 18:18:34 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/09 12:26:08 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/09 16:32:06 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	ft_precision(const char *format, t_struct *f, va_list ap)
 		else if (format[f->i] == '*')
 		{
 			precision = va_arg(ap, int);
-			if (precision > 0)
+			if (precision >= 0)
 				f->precision = precision;
 			else
 				f->precision_specified = 0;
@@ -64,7 +64,7 @@ static void	ft_precision(const char *format, t_struct *f, va_list ap)
 				f->i++;
 		}
 	}
-	if (f->precision_specified)
+	if (f->precision_specified && !f->minus)
 		f->space = 0;
 }
 

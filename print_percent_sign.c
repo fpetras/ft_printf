@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 10:02:15 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/09 10:12:11 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/09 16:25:04 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ static void	ft_print_percent_sign_right_align(t_struct *f)
 {
 	while (f->width > 1)
 	{
-		f->len += write(1, " ", 1);
+		if (f->zero)
+			f->len += write(1, "0", 1);
+		else
+			f->len += write(1, " ", 1);
 		f->width--;
 	}
 	f->len += write(1, "%", 1);
