@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 07:45:42 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/09 12:22:38 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/11 09:40:11 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static void		ft_process_string(const char *format, t_struct *f, va_list ap)
 			if (ft_strchr("sSpdDioOuUxXcCb%", format[f->i]))
 			{
 				ft_print(format, f, ap);
+				if (f->len == -1)
+					return ;
 				ft_reset_struct(f);
 			}
 		}
@@ -89,7 +91,9 @@ int				ft_printf(const char *format, ...)
 	f = NULL;
 	f = ft_init_struct(f);
 	va_start(ap, format);
-	if (!ft_strchr(format, '%'))
+	if (format[0] == '%' && format[1] == '\0')
+		;
+	else if (!ft_strchr(format, '%'))
 		f->len += write(1, format, ft_strlen(format));
 	else
 		ft_process_string(format, f, ap);

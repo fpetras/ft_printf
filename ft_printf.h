@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 07:42:38 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/10 14:46:57 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/11 15:37:47 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct	s_struct
 int				ft_printf(const char *format, ...);
 void			ft_parse_modifiers(const char *format, t_struct *f, va_list ap);
 void			ft_print_decimal(char type, t_struct *f, va_list ap);
+void			ft_padding_left_align(int nbrlen, t_struct *f);
+void			ft_padding_right_align(int nbrlen, int n, t_struct *f);
 void			ft_print_unsigned_decimal(char type, t_struct *f, va_list ap);
 void			ft_print_octal(char type, t_struct *f, va_list ap);
 void			ft_print_hex(char type, t_struct *f, va_list ap);
@@ -58,6 +60,7 @@ int				ft_uitoa_base_pf(uintmax_t value, int base, char letter);
 int				ft_signed_nbr_len(intmax_t value, int base);
 int				ft_unsigned_nbr_len(uintmax_t value, int base);
 void			ft_putwchar_pf(wchar_t wc, t_struct *f);
-void			ft_putwstr_pf(wchar_t *wstr, t_struct *f);
+void			ft_putwstr_pf(wchar_t *wstr, t_struct *f, int max);
+int				ft_wstrsize_pf(wchar_t *wstr);
 
 #endif

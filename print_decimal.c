@@ -6,19 +6,29 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 08:06:19 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/10 08:48:16 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/11 16:05:47 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_padding_left_align(int nbrlen, t_struct *f)
+static int	ft_decimal_left2(intmax_t nbr, int n, t_struct *f)
 {
-	while (f->width >= nbrlen)
+	if (nbr == 0 && f->precision_specified && !f->precision)
+	{
+		while (f->width)
+		{
+			f->len += write(1, " ", 1);
+			f->width--;
+		}
+		return (1);
+	}
+	if (f->space && n == 0)
 	{
 		f->len += write(1, " ", 1);
 		f->width--;
 	}
+	return (0);
 }
 
 static void	ft_print_decimal_left_align(intmax_t nbr, t_struct *f)
@@ -29,20 +39,8 @@ static void	ft_print_decimal_left_align(intmax_t nbr, t_struct *f)
 	nbrlen = ft_signed_nbr_len(nbr, 10);
 	n = (nbr < 0) ? 1 : 0;
 	nbr = (nbr < 0) ? -nbr : nbr;
-	if (nbr == 0 && f->precision_specified && !f->precision)
-	{
-		while (f->width)
-		{
-			f->len += write(1, " ", 1);
-			f->width--;
-		}
+	if (ft_decimal_left2(nbr, n, f))
 		return ;
-	}
-	if (f->space && n == 0)
-	{
-		f->len += write(1, " ", 1);
-		f->width--;
-	}
 	if (f->plus && n == 0)
 	{
 		f->len += write(1, "+", 1);
@@ -58,33 +56,27 @@ static void	ft_print_decimal_left_align(intmax_t nbr, t_struct *f)
 	while (nbrlen++ < f->precision)
 		f->len += write(1, "0", 1);
 	f->len += ft_itoa_base_pf(nbr, 10);
-	f->plus = 0;
-	f->zero = 0;
 	ft_padding_left_align(nbrlen, f);
 }
 
-static void	ft_padding_right_align(int nbrlen, int n, t_struct *f)
+static int	ft_decimal_right2(intmax_t nbr, int n, t_struct *f)
 {
-	if (!f->precision_specified)
-		while (f->width-- > nbrlen)
-		{
-			if (f->zero)
-				f->len += write(1, "0", 1);
-			else
-				f->len += write(1, " ", 1);
-		}
-	else
+	if (nbr == 0 && f->precision_specified && !f->precision)
 	{
-		if (f->plus)
-			f->width--;
-		while (f->width-- > f->precision)
+		while (f->width)
 		{
-			if ((f->zero && f->width != f->precision) || n == 1)
-				f->len += write(1, "0", 1);
-			else
-				f->len += write(1, " ", 1);
+			f->len += write(1, " ", 1);
+			f->width--;
 		}
+		return (1);
 	}
+	if (f->space && n == 0)
+		f->len += write(1, " ", 1);
+	if (f->plus && f->zero && n == 0)
+		f->len += write(1, "+", 1);
+	if (n == 1 && f->zero)
+		f->len += write(1, "-", 1);
+	return (0);
 }
 
 static void	ft_print_decimal_right_align(intmax_t nbr, t_struct *f)
@@ -95,23 +87,10 @@ static void	ft_print_decimal_right_align(intmax_t nbr, t_struct *f)
 	nbrlen = ft_signed_nbr_len(nbr, 10);
 	n = (nbr < 0) ? 1 : 0;
 	nbr = (nbr < 0) ? -nbr : nbr;
-	if (nbr == 0 && f->precision_specified && !f->precision)
-	{
-		while (f->width)
-		{
-			f->len += write(1, " ", 1);
-			f->width--;
-		}
+	if (ft_decimal_right2(nbr, n, f))
 		return ;
-	}
 	if (f->plus && n == 0 && f->width && !f->precision_specified)
 		nbrlen++;
-	if (f->space && n == 0)
-		f->len += write(1, " ", 1);
-	if (f->plus && f->zero && n == 0)
-		f->len += write(1, "+", 1);
-	if (n == 1 && f->zero)
-		f->len += write(1, "-", 1);
 	ft_padding_right_align(nbrlen, n, f);
 	if (!f->zero && f->plus && n == 0)
 		f->len += write(1, "+", 1);
@@ -120,8 +99,7 @@ static void	ft_print_decimal_right_align(intmax_t nbr, t_struct *f)
 		f->len += write(1, "-", 1);
 		nbrlen--;
 	}
-	if (f->width > f->precision)
-		f->precision = f->width;
+	f->precision = (f->width > f->precision) ? f->width : f->precision;
 	while (nbrlen++ < f->precision)
 		f->len += write(1, "0", 1);
 	f->len += ft_itoa_base_pf(nbr, 10);

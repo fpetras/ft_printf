@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 08:47:47 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/10 14:54:45 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/11 13:50:34 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 static void	ft_print_string_left_align(char *str, t_struct *f)
 {
 	int strlen;
-	int	edge_case;
 
 	if (!str)
-	{
-		str = ft_strdup("(null)");
-		edge_case = 1;
-	}
+		str = "(null)";
 	strlen = ft_strlen(str);
 	if (f->precision_specified && strlen > 0 && strlen > f->precision)
 		strlen = f->precision;
@@ -31,20 +27,14 @@ static void	ft_print_string_left_align(char *str, t_struct *f)
 		f->len += write(1, " ", 1);
 		f->width--;
 	}
-	if (ft_strcmp(str, "(null)") == 0 && edge_case == 1)
-		free(str);
 }
 
 static void	ft_print_string_right_align(char *str, t_struct *f)
 {
 	int strlen;
-	int	edge_case;
 
 	if (!str)
-	{
-		str = ft_strdup("(null)");
-		edge_case = 1;
-	}
+		str = "(null)";
 	strlen = ft_strlen(str);
 	if (f->precision_specified && strlen > 0 && strlen > f->precision)
 		strlen = f->precision;
@@ -57,15 +47,43 @@ static void	ft_print_string_right_align(char *str, t_struct *f)
 		f->width--;
 	}
 	f->len += write(1, str, strlen);
-	if (ft_strcmp(str, "(null)") == 0 && edge_case == 1)
-		free(str);
 }
 
-static void	ft_print_wide_string(wchar_t *wstr, t_struct *f)
+static void	ft_print_wide_string_left_align(wchar_t *wstr, t_struct *f)
 {
-	(void)wstr;
-	(void)f;
-	return ;
+	int wstrsize;
+
+	if (!wstr)
+		wstr = L"(null)";
+	wstrsize = ft_wstrsize_pf(wstr);
+	if (f->precision_specified && wstrsize > 0 && wstrsize > f->precision)
+		wstrsize = f->precision;
+	ft_putwstr_pf(wstr, f, wstrsize);
+	while (f->width > wstrsize)
+	{
+		f->len += write(1, " ", 1);
+		f->width--;
+	}
+}
+
+static void	ft_print_wide_string_right_align(wchar_t *wstr, t_struct *f)
+{
+	int wstrsize;
+
+	if (!wstr)
+		wstr = L"(null)";
+	wstrsize = ft_wstrsize_pf(wstr);
+	if (f->precision_specified && wstrsize > 0 && wstrsize > f->precision)
+		wstrsize = f->precision;
+	while (f->width > wstrsize)
+	{
+		if (f->zero)
+			f->len += write(1, "0", 1);
+		else
+			f->len += write(1, " ", 1);
+		f->width--;
+	}
+	ft_putwstr_pf(wstr, f, wstrsize);
 }
 
 void		ft_print_string(char type, t_struct *f, va_list ap)
@@ -76,7 +94,10 @@ void		ft_print_string(char type, t_struct *f, va_list ap)
 	if ((type == 's' && f->length == L) || type == 'S')
 	{
 		wstr = va_arg(ap, wchar_t *);
-		ft_print_wide_string(wstr, f);
+		if (f->minus)
+			ft_print_wide_string_left_align(wstr, f);
+		else
+			ft_print_wide_string_right_align(wstr, f);
 	}
 	else if (type == 's')
 	{

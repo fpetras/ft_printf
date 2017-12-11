@@ -6,7 +6,7 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/03 07:33:44 by fpetras           #+#    #+#              #
-#    Updated: 2017/12/10 14:48:14 by fpetras          ###   ########.fr        #
+#    Updated: 2017/12/11 15:38:08 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME =			libftprintf.a
 FT_PRINTF_SRC = ft_printf.c \
 	  			parse_modifiers.c \
 	  			print_decimal.c \
+				print_decimal_padding.c \
 	  			print_unsigned_decimal.c \
 	  			print_octal.c \
 	  			print_hexadecimal.c \
@@ -29,7 +30,8 @@ FT_PRINTF_SRC = ft_printf.c \
 	  			ft_signed_nbr_len.c \
 				ft_unsigned_nbr_len.c \
 				ft_putwchar_pf.c \
-				ft_putwstr_pf.c
+				ft_putwstr_pf.c \
+				ft_wstrsize_pf.c
 
 LIBFT_SRC =		libft/ft_atoi.c \
 	  			libft/ft_isdigit.c \
