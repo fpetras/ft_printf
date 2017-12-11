@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 08:47:47 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/11 13:50:34 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/11 18:09:50 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	ft_print_wide_string_left_align(wchar_t *wstr, t_struct *f)
 	if (f->precision_specified && wstrsize > 0 && wstrsize > f->precision)
 		wstrsize = f->precision;
 	ft_putwstr_pf(wstr, f, wstrsize);
+	if (f->len == -1)
+		return ;
 	while (f->width > wstrsize)
 	{
 		f->len += write(1, " ", 1);

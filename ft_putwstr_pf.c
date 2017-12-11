@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 14:45:06 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/11 13:28:52 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/11 18:40:21 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ void	ft_putwstr_pf(wchar_t *wstr, t_struct *f, int max)
 		else if (wstr[i] >= 65536 && wstr[i] <= 1114111)
 			size += 4;
 		if (size <= max)
+		{
 			ft_putwchar_pf(wstr[i], f);
+			if (f->len == -1)
+				break ;
+		}
 		else
 			break ;
 		i++;

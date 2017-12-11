@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 15:48:35 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/11 16:11:48 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/11 18:28:27 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void	ft_print_wide_char_left_align(wchar_t wc, t_struct *f)
 	size = (wc >= 2048 && wc <= 65535) ? 3 : size;
 	size = (wc >= 65536 && wc <= 1114111) ? 4 : size;
 	ft_putwchar_pf(wc, f);
+	if (f->len == -1)
+		return ;
 	while (f->width > size)
 	{
 		f->len += write(1, " ", 1);
