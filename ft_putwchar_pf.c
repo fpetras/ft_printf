@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 09:33:23 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/11 18:35:27 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/12 07:05:58 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		ft_putwchar_pf(wchar_t wc, t_struct *f)
 {
 	char wstr[3];
 
-	if (wc <= 127 || (wc <= 255 && MB_CUR_MAX == 1))
+	if ((wc >= 0 && wc <= 127) || (wc >= 0 && wc <= 255 && MB_CUR_MAX == 1))
 		f->len += write(1, &wc, 1);
 	else if (wc >= 128 && wc <= 2047 && MB_CUR_MAX >= 2)
 	{

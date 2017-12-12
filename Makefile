@@ -6,7 +6,7 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/03 07:33:44 by fpetras           #+#    #+#              #
-#    Updated: 2017/12/11 15:38:08 by fpetras          ###   ########.fr        #
+#    Updated: 2017/12/12 07:47:41 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ FT_PRINTF_SRC = ft_printf.c \
 	  			print_pointer.c \
 	  			print_binary.c \
 	  			print_char.c \
+				print_control_char.c \
 				print_string.c \
 				print_percent_sign.c \
 	  			\

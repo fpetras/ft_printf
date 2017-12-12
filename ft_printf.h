@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 07:42:38 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/11 15:37:47 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/12 07:41:33 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void			ft_print_hex(char type, t_struct *f, va_list ap);
 void			ft_print_pointer(char type, t_struct *f, va_list ap);
 void			ft_print_binary(char type, t_struct *f, va_list ap);
 void			ft_print_char(char type, t_struct *f, va_list ap);
+void			ft_print_control_char(char type, t_struct *f, va_list ap);
 void			ft_print_string(char type, t_struct *f, va_list ap);
+void			ft_check_mb_cur_max(wchar_t *wstr, t_struct *f);
 void			ft_print_percent_sign(char type, t_struct *f);
 
 int				ft_itoa_base_pf(intmax_t value, int base);

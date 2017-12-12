@@ -6,15 +6,11 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 07:45:42 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/11 09:40:11 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/12 07:54:32 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/*
-** %[flags][width][.precision][length]type
-*/
 
 static void		ft_print(const char *format, t_struct *f, va_list ap)
 {
@@ -32,6 +28,8 @@ static void		ft_print(const char *format, t_struct *f, va_list ap)
 		ft_print_binary(format[f->i], f, ap);
 	else if (format[f->i] == 'c' || format[f->i] == 'C')
 		ft_print_char(format[f->i], f, ap);
+	else if (format[f->i] == 'r')
+		ft_print_control_char(format[f->i], f, ap);
 	else if (format[f->i] == 's' || format[f->i] == 'S')
 		ft_print_string(format[f->i], f, ap);
 	else if (format[f->i] == '%')
@@ -60,7 +58,7 @@ static void		ft_process_string(const char *format, t_struct *f, va_list ap)
 			f->i++;
 			if (ft_strchr("#-+ .*0123456789hljz", format[f->i]))
 				ft_parse_modifiers(format, f, ap);
-			if (ft_strchr("sSpdDioOuUxXcCb%", format[f->i]))
+			if (ft_strchr("sSpdDioOuUxXcCbr%", format[f->i]))
 			{
 				ft_print(format, f, ap);
 				if (f->len == -1)
