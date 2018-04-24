@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 10:02:15 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/09 16:25:04 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/14 09:46:54 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	ft_print_percent_sign_left_align(t_struct *f)
 {
-	f->len += write(1, "%", 1);
+	f->len += write(f->fd, "%", 1);
 	while (f->width > 1)
 	{
-		f->len += write(1, " ", 1);
+		f->len += write(f->fd, " ", 1);
 		f->width--;
 	}
 }
@@ -27,12 +27,12 @@ static void	ft_print_percent_sign_right_align(t_struct *f)
 	while (f->width > 1)
 	{
 		if (f->zero)
-			f->len += write(1, "0", 1);
+			f->len += write(f->fd, "0", 1);
 		else
-			f->len += write(1, " ", 1);
+			f->len += write(f->fd, " ", 1);
 		f->width--;
 	}
-	f->len += write(1, "%", 1);
+	f->len += write(f->fd, "%", 1);
 }
 
 void		ft_print_percent_sign(char type, t_struct *f)

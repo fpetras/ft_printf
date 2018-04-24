@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 08:47:47 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/12 07:33:01 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/14 09:46:32 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static void	ft_print_string_left_align(char *str, t_struct *f)
 	strlen = ft_strlen(str);
 	if (f->precision_specified && strlen > 0 && strlen > f->precision)
 		strlen = f->precision;
-	f->len += write(1, str, strlen);
+	f->len += write(f->fd, str, strlen);
 	while (f->width > strlen)
 	{
-		f->len += write(1, " ", 1);
+		f->len += write(f->fd, " ", 1);
 		f->width--;
 	}
 }
@@ -41,12 +41,12 @@ static void	ft_print_string_right_align(char *str, t_struct *f)
 	while (f->width > strlen)
 	{
 		if (f->zero)
-			f->len += write(1, "0", 1);
+			f->len += write(f->fd, "0", 1);
 		else
-			f->len += write(1, " ", 1);
+			f->len += write(f->fd, " ", 1);
 		f->width--;
 	}
-	f->len += write(1, str, strlen);
+	f->len += write(f->fd, str, strlen);
 }
 
 static void	ft_print_wide_string_left_align(wchar_t *wstr, t_struct *f)
@@ -63,7 +63,7 @@ static void	ft_print_wide_string_left_align(wchar_t *wstr, t_struct *f)
 		return ;
 	while (f->width > wstrsize)
 	{
-		f->len += write(1, " ", 1);
+		f->len += write(f->fd, " ", 1);
 		f->width--;
 	}
 }
@@ -83,9 +83,9 @@ static void	ft_print_wide_string_right_align(wchar_t *wstr, t_struct *f)
 	while (f->width > wstrsize)
 	{
 		if (f->zero)
-			f->len += write(1, "0", 1);
+			f->len += write(f->fd, "0", 1);
 		else
-			f->len += write(1, " ", 1);
+			f->len += write(f->fd, " ", 1);
 		f->width--;
 	}
 	ft_putwstr_pf(wstr, f, wstrsize);

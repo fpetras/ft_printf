@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 15:48:35 by fpetras           #+#    #+#             */
-/*   Updated: 2017/12/11 18:28:27 by fpetras          ###   ########.fr       */
+/*   Updated: 2017/12/14 09:45:53 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	ft_print_char_left_align(unsigned char c, t_struct *f)
 {
-	f->len += write(1, &c, 1);
+	f->len += write(f->fd, &c, 1);
 	while (f->width > 1)
 	{
-		f->len += write(1, " ", 1);
+		f->len += write(f->fd, " ", 1);
 		f->width--;
 	}
 }
@@ -27,12 +27,12 @@ static void	ft_print_char_right_align(unsigned char c, t_struct *f)
 	while (f->width > 1)
 	{
 		if (f->zero)
-			f->len += write(1, "0", 1);
+			f->len += write(f->fd, "0", 1);
 		else
-			f->len += write(1, " ", 1);
+			f->len += write(f->fd, " ", 1);
 		f->width--;
 	}
-	f->len += write(1, &c, 1);
+	f->len += write(f->fd, &c, 1);
 }
 
 static void	ft_print_wide_char_left_align(wchar_t wc, t_struct *f)
@@ -53,7 +53,7 @@ static void	ft_print_wide_char_left_align(wchar_t wc, t_struct *f)
 		return ;
 	while (f->width > size)
 	{
-		f->len += write(1, " ", 1);
+		f->len += write(f->fd, " ", 1);
 		f->width--;
 	}
 }
@@ -74,9 +74,9 @@ static void	ft_print_wide_char_right_align(wchar_t wc, t_struct *f)
 	while (f->width > size)
 	{
 		if (f->zero)
-			f->len += write(1, "0", 1);
+			f->len += write(f->fd, "0", 1);
 		else
-			f->len += write(1, " ", 1);
+			f->len += write(f->fd, " ", 1);
 		f->width--;
 	}
 	ft_putwchar_pf(wc, f);
